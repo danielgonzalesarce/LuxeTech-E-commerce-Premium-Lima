@@ -1,0 +1,8 @@
+{
+  "name": "LuxeTech - Premium E-commerce",
+  "description": "A full-scale, production-ready e-commerce platform featuring 200+ products, real inventory management, persistent shopping cart, multi-step checkout with simulated Stripe integration, and a comprehensive admin dashboard.",
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "majorCapabilities": []
+}
