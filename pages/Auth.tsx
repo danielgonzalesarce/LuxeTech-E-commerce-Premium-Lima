@@ -4,10 +4,10 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { useApp } from '../store/AppContext';
 
 interface AuthProps {
-  onSuccess: () => void;
+  onNavigate: (page: string) => void;
 }
 
-const Auth: React.FC<AuthProps> = ({ onSuccess }) => {
+const Auth: React.FC<AuthProps> = ({ onNavigate }) => {
   const { login, register } = useApp();
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState('');
@@ -20,11 +20,12 @@ const Auth: React.FC<AuthProps> = ({ onSuccess }) => {
     
     if (isLogin) {
       login(email);
+      onNavigate(email.includes('admin') ? 'admin' : 'home');
     } else {
       if (!name) return alert("Por favor, ingrese su nombre.");
       register(name, email);
+      onNavigate('home');
     }
-    onSuccess();
   };
 
   return (

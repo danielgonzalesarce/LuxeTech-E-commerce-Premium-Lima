@@ -44,7 +44,7 @@ const Main: React.FC = () => {
       case 'collections': return <Collections onNavigate={navigate} />;
       case 'product': return <ProductDetail product={params.product} onNavigate={navigate} />;
       case 'cart': return <Cart onNavigate={navigate} />;
-      case 'auth': return <Auth onSuccess={() => setPage('home')} />;
+      case 'auth': return <Auth onNavigate={(page) => navigate(page)} />;
       case 'checkout': return <Checkout onNavigate={navigate} />;
       case 'admin': return <Admin />;
       case 'essentials': return <Essentials onNavigate={navigate} />;
