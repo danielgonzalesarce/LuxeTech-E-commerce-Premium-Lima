@@ -1,6 +1,7 @@
 
 import React from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import AuthRequiredModal from '../components/AuthRequiredModal';
 import { useApp } from '../store/AppContext';
 
 interface CartProps {
@@ -8,7 +9,17 @@ interface CartProps {
 }
 
 const Cart: React.FC<CartProps> = ({ onNavigate }) => {
-  const { cart, removeFromCart, updateCartQuantity } = useApp();
+  const { cart, removeFromCart, updateCartQuantity, user, setPendingPath } = useApp();
+  const [showAuthModal, setShowAuthModal] = React.useState(false);
+
+  const handleCheckout = () => {
+    if (!user) {
+      setPendingPath('checkout');
+      setShowAuthModal(true);
+      return;
+    }
+    onNavigate('checkout');
+  };
 
   const subtotal = cart.reduce((acc, item) => acc + (item.product.price * item.quantity), 0);
   const tax = subtotal * 0.15;
@@ -120,7 +131,7 @@ const Cart: React.FC<CartProps> = ({ onNavigate }) => {
             
             <div className="space-y-6 relative z-10">
               <button 
-                onClick={() => onNavigate('checkout')}
+                onClick={handleCheckout}
                 className="w-full bg-black text-white py-6 rounded-full font-black uppercase text-[12px] tracking-[0.3em] hover:bg-indigo-600 shadow-2xl transition-all hover:scale-[1.02] active:scale-95"
               >
                 Proceder al Pago
@@ -133,6 +144,12 @@ const Cart: React.FC<CartProps> = ({ onNavigate }) => {
           </div>
         </div>
       </div>
+      <AuthRequiredModal 
+        isOpen={showAuthModal} 
+        onClose={() => setShowAuthModal(false)} 
+        onLogin={() => { setShowAuthModal(false); onNavigate('auth'); }}
+        onRegister={() => { setShowAuthModal(false); onNavigate('auth'); }}
+      />
     </div>
   );
 };

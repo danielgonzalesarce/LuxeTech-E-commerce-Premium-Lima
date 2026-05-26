@@ -9,6 +9,10 @@ interface AppContextType {
   user: User | null;
   cart: CartItem[];
   orders: Order[];
+  favorites: string[];
+  pendingPath: string | null;
+  setPendingPath: (path: string | null) => void;
+  toggleFavorite: (productId: string) => void;
   login: (email: string) => void;
   // Added register method to AppContextType to fix TypeScript error in Auth.tsx
   register: (name: string, email: string) => void;
@@ -47,12 +51,29 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
     return saved ? JSON.parse(saved) : [];
   });
 
+  const [favorites, setFavorites] = useState<string[]>(() => {
+    // For simplicity, just use a global favorites list for now as auth is simple
+    const saved = localStorage.getItem('favorites');
+    return saved ? JSON.parse(saved) : [];
+  });
+
+  const [pendingPath, setPendingPath] = useState<string | null>(null);
+
   useEffect(() => {
     localStorage.setItem('products', JSON.stringify(products));
     localStorage.setItem('user', JSON.stringify(user));
     localStorage.setItem('cart', JSON.stringify(cart));
     localStorage.setItem('orders', JSON.stringify(orders));
-  }, [products, user, cart, orders]);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+  }, [products, user, cart, orders, favorites]);
+
+  const toggleFavorite = (productId: string) => {
+    setFavorites(prev => 
+      prev.includes(productId) 
+        ? prev.filter(id => id !== productId) 
+        : [...prev, productId]
+    );
+  };
 
   const login = (email: string) => {
     const isAdmin = email.includes('admin');
@@ -159,9 +180,9 @@ export const AppProvider: React.FC<{ children: React.ReactNode }> = ({ children 
 
   return (
     <AppContext.Provider value={{
-      products, categories: CATEGORIES, user, cart, orders,
+      products, categories: CATEGORIES, user, cart, orders, favorites, pendingPath, setPendingPath,
       login, register, logout, addToCart, removeFromCart, updateCartQuantity, clearCart, checkout,
-      updateProduct, deleteProduct, createProduct, updateOrderStatus
+      updateProduct, deleteProduct, createProduct, updateOrderStatus, toggleFavorite
     }}>
       {children}
     </AppContext.Provider>

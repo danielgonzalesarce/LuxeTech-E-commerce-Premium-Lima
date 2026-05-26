@@ -1,6 +1,7 @@
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Heart } from 'lucide-react';
 import { useApp } from '../store/AppContext';
 import { Product } from '../types';
 
@@ -10,7 +11,7 @@ interface ProductDetailProps {
 }
 
 const ProductDetail: React.FC<ProductDetailProps> = ({ product, onNavigate }) => {
-  const { addToCart, products } = useApp();
+  const { addToCart, products, favorites, toggleFavorite } = useApp();
   const [selectedImage, setSelectedImage] = useState(0);
   const [quantity, setQuantity] = useState(1);
   const [adding, setAdding] = useState(false);
@@ -31,6 +32,12 @@ const ProductDetail: React.FC<ProductDetailProps> = ({ product, onNavigate }) =>
         {/* Medios Visuales */}
         <div className="w-full lg:w-3/5 lg:sticky lg:top-32 space-y-8">
           <div className="aspect-[4/5] rounded-[60px] overflow-hidden bg-gray-50 border border-gray-100 shadow-2xl relative group">
+            <button 
+              className="absolute top-8 right-8 p-4 bg-white/50 backdrop-blur-md rounded-full text-red-500 transition-colors z-20"
+              onClick={() => toggleFavorite(product.id)}
+            >
+              <Heart size={24} fill={favorites.includes(product.id) ? "currentColor" : "none"} />
+            </button>
             <AnimatePresence mode="wait">
               <motion.img 
                 key={selectedImage}

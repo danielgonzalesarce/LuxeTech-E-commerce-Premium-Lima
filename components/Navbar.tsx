@@ -55,6 +55,10 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
                   Colecciones
                   <span className="absolute bottom-0 left-0 w-full h-[1px] bg-black transform translate-x-[-105%] group-hover:translate-x-0 transition-transform duration-500" />
                 </button>
+                <button onClick={() => onNavigate('favorites')} className="text-[11px] font-bold uppercase tracking-[0.25em] text-gray-700 hover:text-black transition-colors relative overflow-hidden group">
+                  Esenciales
+                  <span className="absolute bottom-0 left-0 w-full h-[1px] bg-black transform translate-x-[-105%] group-hover:translate-x-0 transition-transform duration-500" />
+                </button>
                 {user?.role === UserRole.ADMIN && (
                   <button onClick={() => onNavigate('admin')} className="text-[11px] font-bold uppercase tracking-[0.25em] text-indigo-600 hover:text-indigo-800">Administración</button>
                 )}
@@ -133,7 +137,7 @@ const Navbar: React.FC<NavbarProps> = ({ onNavigate }) => {
                 <button onClick={() => handleNavigate('home')} className="text-left text-3xl font-serif">Inicio</button>
                 <button onClick={() => handleNavigate('catalog')} className="text-left text-3xl font-serif">Catálogo</button>
                 <button onClick={() => handleNavigate('collections')} className="text-left text-3xl font-serif">Colecciones</button>
-                <button onClick={() => handleNavigate('essentials')} className="text-left text-3xl font-serif">Esenciales</button>
+                <button onClick={() => handleNavigate('favorites')} className="text-left text-3xl font-serif">Esenciales</button>
                 {user ? (
                    <button onClick={() => { logout(); setIsMobileMenuOpen(false); }} className="text-left text-3xl font-serif text-red-600">Salir</button>
                 ) : (

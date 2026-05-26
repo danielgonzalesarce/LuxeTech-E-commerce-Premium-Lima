@@ -1,6 +1,7 @@
 
 import React, { useState, useMemo, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Heart } from 'lucide-react';
 import { useApp } from '../store/AppContext';
 import { Product } from '../types';
 import { EnhancedCategory } from '../constants';
@@ -14,7 +15,7 @@ interface CatalogProps {
 const ITEMS_PER_PAGE = 12;
 
 const Catalog: React.FC<CatalogProps> = ({ initialCategoryId, onNavigate, search }) => {
-  const { products, categories } = useApp();
+  const { products, categories, favorites, toggleFavorite } = useApp();
   const [searchTerm, setSearchTerm] = useState(search || '');
   const [selectedCategory, setSelectedCategory] = useState(initialCategoryId || 'all');
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc' | 'newest'>('newest');

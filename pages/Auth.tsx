@@ -8,7 +8,7 @@ interface AuthProps {
 }
 
 const Auth: React.FC<AuthProps> = ({ onNavigate }) => {
-  const { login, register } = useApp();
+  const { login, register, pendingPath, setPendingPath } = useApp();
   const [isLogin, setIsLogin] = useState(true);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
@@ -20,12 +20,14 @@ const Auth: React.FC<AuthProps> = ({ onNavigate }) => {
     
     if (isLogin) {
       login(email);
-      onNavigate(email.includes('admin') ? 'admin' : 'home');
     } else {
       if (!name) return alert("Por favor, ingrese su nombre.");
       register(name, email);
-      onNavigate('home');
     }
+    
+    const target = pendingPath || (email.includes('admin') ? 'admin' : 'home');
+    setPendingPath(null);
+    onNavigate(target);
   };
 
   return (

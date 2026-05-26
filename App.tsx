@@ -11,7 +11,7 @@ import Cart from './pages/Cart';
 import Auth from './pages/Auth';
 import Checkout from './pages/Checkout';
 import Admin from './pages/Admin';
-import Essentials from './pages/Essentials';
+import Favorites from './pages/Favorites';
 import Support from './pages/Support';
 import InfoPage from './pages/InfoPage';
 import { Product, Order } from './types';
@@ -47,7 +47,7 @@ const Main: React.FC = () => {
       case 'auth': return <Auth onNavigate={(page) => navigate(page)} />;
       case 'checkout': return <Checkout onNavigate={navigate} />;
       case 'admin': return <Admin />;
-      case 'essentials': return <Essentials onNavigate={navigate} />;
+      case 'favorites': return <Favorites onNavigate={navigate} />;
       case 'support': return <Support />;
       case 'shipping': return (
         <InfoPage 
@@ -157,7 +157,7 @@ const Main: React.FC = () => {
             <ul className="text-gray-400 text-sm space-y-4">
               <li onClick={() => navigate('catalog')} className="hover:text-black cursor-pointer transition-colors">La Colección Maestra</li>
               <li onClick={() => navigate('collections')} className="hover:text-black cursor-pointer transition-colors">Lanzamientos Limitados</li>
-              <li onClick={() => navigate('essentials')} className="hover:text-black cursor-pointer transition-colors">Esenciales Estéticos</li>
+              <li onClick={() => navigate('favorites')} className="hover:text-black cursor-pointer transition-colors">Esenciales</li>
             </ul>
           </div>
           <div>
